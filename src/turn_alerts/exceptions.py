@@ -1,4 +1,4 @@
-from schemas.invalid_response import InvalidResponseSchema
+from .schemas.invalid_response import InvalidResponseSchema
 
 
 class AlertException(Exception):

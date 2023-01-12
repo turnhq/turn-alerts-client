@@ -1,8 +1,8 @@
 from typing import Type
 from .config import Config
-from exceptions import AlertException
-from src.turn_alerts.rest import RestAPI
-from schemas.create_alerts import (
+from .exceptions import AlertException
+from .rest import RestAPI
+from .schemas.create_alerts import (
     AlertResponseSchema,
     CreateAlertPayload,
 )

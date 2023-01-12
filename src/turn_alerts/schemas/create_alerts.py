@@ -6,7 +6,7 @@ from uuid import UUID
 from marshmallow import Schema, fields
 from marshmallow.validate import OneOf
 
-from schemas.types import AlertTypeEnum, ObjectTypeEnum, UserTypeEnum
+from .types import AlertTypeEnum, ObjectTypeEnum, UserTypeEnum
 
 
 class CreateAlertPayloadUserEntry(TypedDict):
