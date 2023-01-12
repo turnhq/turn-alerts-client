@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from setuptools import setup, find_packages
+from setuptools import setup
 
 if sys.version_info[0] < 3:
     with open("README.md", "r") as fh:
@@ -18,7 +18,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Amir Canto",
     author_email="amir@turn.ai",
-    packages=find_packages(),
+    packages=["turn_alerts"],
     install_requires=["marshmallow>=3.19.0", "requests>=2.28.1"],
     tests_require=["nose>=1.3.7"],
     test_suite="nose.collector",
