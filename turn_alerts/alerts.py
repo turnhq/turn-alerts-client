@@ -3,7 +3,7 @@ from typing import Type
 from schemas.invalid_response import InvalidResponseSchema
 from .config import Config
 from exceptions import AlertException
-from rest import RestAPI
+from turn_alerts.rest import RestAPI
 from schemas.create_alerts import (
     AlertResponseSchema,
     CreateAlertPayload,

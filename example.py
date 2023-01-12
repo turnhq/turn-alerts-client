@@ -1,8 +1,8 @@
 import os
-from alerts import AlertAPI
+from turn_alerts.alerts import AlertAPI
 
-from schemas.create_alerts import CreateAlertPayload
-from schemas.types import AlertTypeEnum, ObjectTypeEnum, UserTypeEnum
+from turn_alerts.schemas.create_alerts import CreateAlertPayload
+from turn_alerts.schemas.types import AlertTypeEnum, ObjectTypeEnum, UserTypeEnum
 
 token = os.environ.get("TOKEN")
 host = os.environ.get("HOST")
