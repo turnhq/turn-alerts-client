@@ -1,0 +1,13 @@
+[project]
+name = "turn_alerts_client"
+version = "0.0.1"
+authors = [
+  { name="Amir Canto", email="amir@turn.ai" },
+]
+description = "Client library for connecting with Turn's notifications microservice."
+readme = "README.md"
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
