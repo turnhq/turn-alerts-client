@@ -60,5 +60,18 @@ class AlertResponseSchema(Schema):
     recruitment_partner_id = fields.String(required=False, allow_none=True)
     object_id = fields.String()
     active = fields.Boolean()
-    created_at = fields.DateTime()
+    created_at = fields.String()
     tags = fields.List(fields.String, load_default=list)
+
+
+class AlertResponseDict(TypedDict):
+    id: UUID
+    title: str
+    body: str
+    type: AlertTypeEnum
+    user_id: str
+    recruitment_partner_id: NotRequired[UUID]
+    object_id: NotRequired[UUID | str]
+    active: bool
+    created_at: str
+    tags: list[str]
