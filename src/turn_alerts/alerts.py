@@ -1,9 +1,7 @@
 from typing import Type
-
-from schemas.invalid_response import InvalidResponseSchema
 from .config import Config
 from exceptions import AlertException
-from turn_alerts.rest import RestAPI
+from src.turn_alerts.rest import RestAPI
 from schemas.create_alerts import (
     AlertResponseSchema,
     CreateAlertPayload,
@@ -13,7 +11,8 @@ from schemas.create_alerts import (
 class AlertAPI:
     """Alert API Class
 
-    This is the main client class to create, list, and mark as inactive alerts through the microservice.
+    This is the main client class to create, list,
+    and mark as inactive alerts through the microservice.
     """
 
     __slots__ = ("__session", "__config")

@@ -15,4 +15,4 @@ class AlertException(Exception):
         super().__init__(self.message)
 
     def get_message(self, response: InvalidResponseSchema):
-        res = InvalidResponseSchema.dumps
+        pass

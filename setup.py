@@ -12,7 +12,7 @@ else:
 
 setup(
     name="turn_alerts",
-    version="1.0.1",
+    version="1.0.2",
     description="Client library for use with the Turn notifications microservice",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -20,6 +20,4 @@ setup(
     author_email="amir@turn.ai",
     packages=find_packages(),
     install_requires=["marshmallow>=3.19.0", "requests>=2.28.1"],
-    tests_require=["nose>=1.3.7"],
-    test_suite="nose.collector",
 )

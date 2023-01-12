@@ -1,5 +1,4 @@
 """ Schemas to create Alerts from Alert Microservice """
-from enum import Enum
 from typing import TypedDict
 from typing_extensions import NotRequired
 from uuid import UUID
