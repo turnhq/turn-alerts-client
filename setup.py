@@ -18,7 +18,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Amir Canto",
     author_email="amir@turn.ai",
-    packages=["turn_alerts"],
+    packages=["turn_alerts", "turn_alerts.schemas"],
     install_requires=["marshmallow>=3.19.0", "requests>=2.28.1"],
     tests_require=["nose>=1.3.7"],
     test_suite="nose.collector",
