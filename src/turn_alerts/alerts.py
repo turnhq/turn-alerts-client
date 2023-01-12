@@ -1,8 +1,9 @@
-from typing import Type
+from typing import Type, cast
 from .config import Config
 from .exceptions import AlertException
 from .rest import RestAPI
 from .schemas.create_alerts import (
+    AlertResponseDict,
     AlertResponseSchema,
     CreateAlertPayload,
 )
@@ -30,12 +31,12 @@ class AlertAPI:
         self.__config = Config
         self.__session.set_token(token)
 
-    def create(self, alert_data: CreateAlertPayload) -> AlertResponseSchema:
+    def create(self, alert_data: CreateAlertPayload) -> AlertResponseDict:
         res = self.__session.post(self.__config.CREATE_ALERT, dict(alert_data))
         if res.status_code == 200:
             alert_response = AlertResponseSchema()
-            alert_response.load(res.json())
-            return alert_response
+            data: AlertResponseDict | list = alert_response.dump(res.json())
+            return cast(AlertResponseDict, data)
         else:
             raise AlertException()
 
