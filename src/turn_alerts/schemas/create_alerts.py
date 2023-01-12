@@ -23,8 +23,8 @@ class CreateAlertPayload(TypedDict):
     title: str
     body: str
     type: AlertTypeEnum
-    user: NotRequired[CreateAlertPayloadUserEntry]
-    object: CreateAlertPayloadObjectEntry
+    user: CreateAlertPayloadUserEntry
+    object: NotRequired[CreateAlertPayloadObjectEntry]
     tags: NotRequired[list[str]]
 
 
