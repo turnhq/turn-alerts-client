@@ -1,5 +1,5 @@
 """ Schemas to create Alerts from Alert Microservice """
-from typing import TypedDict
+from typing import List, TypedDict, Union
 from typing_extensions import NotRequired
 from uuid import UUID
 
@@ -16,7 +16,7 @@ class CreateAlertPayloadUserEntry(TypedDict):
 
 class CreateAlertPayloadObjectEntry(TypedDict):
     object_type: ObjectTypeEnum
-    id: int | str | UUID
+    id: Union[int, str, UUID]
 
 
 class CreateAlertPayload(TypedDict):
@@ -25,7 +25,7 @@ class CreateAlertPayload(TypedDict):
     type: AlertTypeEnum
     user: CreateAlertPayloadUserEntry
     object: NotRequired[CreateAlertPayloadObjectEntry]
-    tags: NotRequired[list[str]]
+    tags: NotRequired[List[str]]
 
 
 class UserAlertSchema(Schema):
@@ -71,7 +71,7 @@ class AlertResponseDict(TypedDict):
     type: AlertTypeEnum
     user_id: str
     recruitment_partner_id: NotRequired[UUID]
-    object_id: NotRequired[UUID | str]
+    object_id: NotRequired[Union[UUID, str]]
     active: bool
     created_at: str
-    tags: list[str]
+    tags: List[str]

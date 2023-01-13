@@ -1,4 +1,5 @@
 """ Session Object for Alerts API Microservice """
+from typing import Dict
 import requests
 
 
@@ -21,11 +22,11 @@ class RestAPI:
         res = self.__req.get("".join([self.__host, resource]))
         return res
 
-    def post(self, resource: str, data: dict):
+    def post(self, resource: str, data: Dict):
         res = self.__req.post("".join([self.__host, resource]), json=data)
         return res
 
-    def put(self, resource: str, data: dict):
+    def put(self, resource: str, data: Dict):
         res = self.__req.put("".join([self.__host, resource]), data=data)
         return res
 

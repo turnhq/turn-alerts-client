@@ -1,4 +1,4 @@
-from typing import Type, cast
+from typing import List, Type, Union, cast
 from .config import Config
 from .exceptions import AlertException
 from .rest import RestAPI
@@ -35,7 +35,7 @@ class AlertAPI:
         res = self.__session.post(self.__config.CREATE_ALERT, dict(alert_data))
         if res.status_code == 200:
             alert_response = AlertResponseSchema()
-            data: AlertResponseDict | list = alert_response.dump(res.json())
+            data: Union[AlertResponseDict, List] = alert_response.dump(res.json())
             return cast(AlertResponseDict, data)
         else:
             raise AlertException()
