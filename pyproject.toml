@@ -1,6 +1,6 @@
 [project]
-name = "turn-alerts"
-version = "0.0.5"
+name = "turn_alerts"
+version = "0.0.6"
 authors = [
   { name="Amir Canto", email="amir@turn.ai" },
 ]
