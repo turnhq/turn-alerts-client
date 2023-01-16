@@ -12,6 +12,7 @@ class ObjectTypeEnum(str, Enum):
     export_request = "export_request"
     cohort = "cohort"
     invitation = "invitation"
+    background_check = "background_check"
 
 
 class AlertTypeEnum(str, Enum):
@@ -42,3 +43,9 @@ class AlertTypeEnum(str, Enum):
 
     READY_ACCOUNT_DETAILS_UPDATE = "ready_account_details_update"
     ADVISE_ACCOUNT_DETAILS_UPDATE = "advise_account_details_update"
+
+    SINGLE_INVITE_SUCCESS = "single_invite_success"
+    SINGLE_INVITE_FAILED = "single_invite_failed"
+
+    BULK_UPLOAD_SUCCESS = "bulk_upload_success"
+    BULK_UPLOAD_FAILED = "bulk_upload_failed"
