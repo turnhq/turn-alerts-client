@@ -9,8 +9,8 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, "README.md")).read()
 
 setup(
-    name="turn_alerts_client",
-    version="0.0.4",
+    name="turn_alerts",
+    version="0.0.5",
     description="Client library for connecting with Turn notifications microservice.",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -19,8 +19,7 @@ setup(
     author_email="",
     install_requires=["marshmallow>=3.19.0", "requests>=2.28.1"],
     dependency_links=[],
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
+    packages=find_packages(),
     classifiers=[
         "Environment :: Console",
         "Intended Audience :: Developers",
