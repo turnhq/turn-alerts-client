@@ -9,7 +9,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, "README.md")).read()
 
 setup(
-    name="turn_alerts",
+    name="turn-alerts",
     version="0.0.5",
     description="Client library for connecting with Turn notifications microservice.",
     long_description=README,
