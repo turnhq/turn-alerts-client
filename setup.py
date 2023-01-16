@@ -10,7 +10,7 @@ README = open(os.path.join(here, "README.md")).read()
 
 setup(
     name="turn_alerts_client",
-    version="0.0.3",
+    version="0.0.4",
     description="Client library for connecting with Turn notifications microservice.",
     long_description=README,
     long_description_content_type="text/markdown",
