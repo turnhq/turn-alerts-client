@@ -13,6 +13,9 @@ class ObjectTypeEnum(str, Enum):
     cohort = "cohort"
     invitation = "invitation"
     background_check = "background_check"
+    single_invitation = "single_invitation",
+    bulk_upload = "bulk_upload"
+
 
 
 class AlertTypeEnum(str, Enum):
