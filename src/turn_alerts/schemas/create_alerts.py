@@ -36,7 +36,7 @@ class UserAlertSchema(Schema):
 class ObjectAlertSchema(Schema):
     object_type = fields.String(
         validate=OneOf(
-            ["advise_job", "s3_upload", "export_request", "background_check"]
+            ["advise_job", "s3_upload", "export_request", "background_check", "bulk_upload", "single_invitation"]
         )
     )
     id = fields.Integer()
