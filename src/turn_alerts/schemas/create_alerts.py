@@ -6,40 +6,48 @@ from uuid import UUID
 from marshmallow import Schema, fields
 from marshmallow.validate import OneOf
 
+from turn_alerts.schemas.tags import AlertTagEnum
+
 from .types import AlertTypeEnum, ObjectTypeEnum, UserTypeEnum
 
 
-class CreateAlertPayloadUserEntry(TypedDict):
+class AlertBase(TypedDict):
+    tags: List[AlertTagEnum]
+
+
+class CreateAlertPayloadUserEntry(AlertBase):
     user_type: UserTypeEnum
     id: int
 
 
-class CreateAlertPayloadObjectEntry(TypedDict):
+class CreateAlertPayloadObjectEntry(AlertBase):
     object_type: ObjectTypeEnum
     id: Union[int, str, UUID]
 
 
-class CreateAlertPayload(TypedDict):
+class CreateAlertPayload(AlertBase):
     title: str
     body: str
     type: AlertTypeEnum
     user: CreateAlertPayloadUserEntry
     object: NotRequired[CreateAlertPayloadObjectEntry]
-    tags: NotRequired[List[str]]
+
+
+class AlertObjectId(fields.Field):
+    def _deserialize(self, value):
+        if value is None:
+            raise ValueError("Alert Object may not be None")
+        return value
 
 
 class UserAlertSchema(Schema):
     user_type = fields.String()
-    id = fields.Integer()
+    id = AlertObjectId()
 
 
 class ObjectAlertSchema(Schema):
-    object_type = fields.String(
-        validate=OneOf(
-            ["advise_job", "s3_upload", "export_request", "background_check", "bulk_upload", "single_invitation"]
-        )
-    )
-    id = fields.Integer()
+    object_type = fields.Enum(AlertTypeEnum)
+    id = AlertObjectId()
 
 
 class AlertSchema(Schema):
@@ -56,12 +64,16 @@ class AlertResponseSchema(Schema):
     title = fields.String()
     body = fields.String()
     type = fields.String()
-    user_id = fields.String()
-    recruitment_partner_id = fields.String(required=False, allow_none=True)
-    object_id = fields.String()
+    user = ObjectAlertSchema()
+    object = ObjectAlertSchema()
     active = fields.Boolean()
     created_at = fields.String()
-    tags = fields.List(fields.String, load_default=list)
+    tags = fields.List(fields.Enum(AlertTagEnum), load_default=list)
+
+
+class AlertObjectDict(TypedDict):
+    id: Union[str, int]
+    type: str
 
 
 class AlertResponseDict(TypedDict):
@@ -69,9 +81,8 @@ class AlertResponseDict(TypedDict):
     title: str
     body: str
     type: AlertTypeEnum
-    user_id: str
-    recruitment_partner_id: NotRequired[UUID]
-    object_id: NotRequired[Union[UUID, str]]
+    user: AlertObjectDict
+    object: AlertObjectDict
     active: bool
     created_at: str
     tags: List[str]
