@@ -1,0 +1,41 @@
+interactions:
+  - request:
+      body:
+        '{"title": "Testing alert", "body": "Prueba de alerta", "type": "START_PROCESSING",
+        "object": {"object_type": "advise_job", "id": "b34eba69-f1cd-49ec-813a-b88a268198f5"},
+        "partner_id": 1, "team_member_id": 1, "tags": ["screening"]}'
+      headers:
+        Accept:
+          - "*/*"
+        Accept-Encoding:
+          - gzip, deflate
+        Authorization:
+          - abc
+        Connection:
+          - keep-alive
+        Content-Length:
+          - "230"
+        Content-Type:
+          - application/json
+        User-Agent:
+          - python-requests/2.28.1
+      method: POST
+      uri: http://localhost:8000/alerts
+    response:
+      body:
+        string:
+          '{"alert_type":"START_PROCESSING","id":"8d975790-acc3-4d85-9ba2-7191f051b837","title":"Testing
+          alert","body":"Prueba de alerta","type":"START_PROCESSING","user":{"id":"43dc7b72-6eb1-46bf-8247-1732d0ae39f4","team_member_id":1,"partner_id":1},"object":{"type":"advise_job","id":"b34eba69-f1cd-49ec-813a-b88a268198f5"},"active":true,"created_at":"2023-01-30T18:16:31.556958","tags":["screening"]}'
+      headers:
+        content-length:
+          - "392"
+        content-type:
+          - application/json
+        date:
+          - Mon, 30 Jan 2023 23:22:57 GMT
+        server:
+          - uvicorn
+      status:
+        code: 200
+        message: OK
+version: 1

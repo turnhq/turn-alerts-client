@@ -11,26 +11,19 @@ from turn_alerts.schemas.tags import AlertTagEnum
 from .types import AlertTypeEnum, ObjectTypeEnum, UserTypeEnum
 
 
-class AlertBase(TypedDict):
-    tags: List[AlertTagEnum]
-
-
-class CreateAlertPayloadUserEntry(AlertBase):
-    user_type: UserTypeEnum
-    id: int
-
-
-class CreateAlertPayloadObjectEntry(AlertBase):
+class CreateAlertPayloadObjectEntry(TypedDict):
     object_type: ObjectTypeEnum
     id: Union[int, str, UUID]
 
 
-class CreateAlertPayload(AlertBase):
+class CreateAlertPayload(TypedDict):
     title: str
     body: str
     type: AlertTypeEnum
-    user: CreateAlertPayloadUserEntry
+    partner_id: int
+    team_member_id: int
     object: NotRequired[CreateAlertPayloadObjectEntry]
+    tags: List[AlertTagEnum]
 
 
 class AlertObjectId(fields.Field):
@@ -41,12 +34,13 @@ class AlertObjectId(fields.Field):
 
 
 class UserAlertSchema(Schema):
-    user_type = fields.String()
-    id = AlertObjectId()
+    id = fields.UUID()
+    partner_id = fields.Integer()
+    team_member_id = fields.Integer(required=False)
 
 
 class ObjectAlertSchema(Schema):
-    object_type = fields.Enum(AlertTypeEnum)
+    type = fields.String(validate=OneOf([entry for entry in ObjectTypeEnum]))
     id = AlertObjectId()
 
 
@@ -60,15 +54,18 @@ class AlertSchema(Schema):
 
 
 class AlertResponseSchema(Schema):
-    id = fields.String()
+    id = fields.UUID()
     title = fields.String()
     body = fields.String()
     type = fields.String()
-    user = ObjectAlertSchema()
-    object = ObjectAlertSchema()
+    user = fields.Nested(UserAlertSchema)
+    object = fields.Nested(ObjectAlertSchema)
     active = fields.Boolean()
     created_at = fields.String()
-    tags = fields.List(fields.Enum(AlertTagEnum), load_default=list)
+    tags = fields.List(
+        fields.Str(validate=OneOf([entry for entry in AlertTagEnum])),
+        load_default=list,
+    )
 
 
 class AlertObjectDict(TypedDict):
@@ -76,12 +73,18 @@ class AlertObjectDict(TypedDict):
     type: str
 
 
+class AlertUserDict(TypedDict):
+    id: UUID
+    partner_id: int
+    team_member_id: int
+
+
 class AlertResponseDict(TypedDict):
     id: UUID
     title: str
     body: str
     type: AlertTypeEnum
-    user: AlertObjectDict
+    user: AlertUserDict
     object: AlertObjectDict
     active: bool
     created_at: str
