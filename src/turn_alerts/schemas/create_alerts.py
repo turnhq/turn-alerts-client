@@ -21,7 +21,7 @@ class CreateAlertPayload(TypedDict):
     body: str
     type: AlertTypeEnum
     partner_id: int
-    team_member_id: int
+    team_member_id: NotRequired[int]
     object: NotRequired[CreateAlertPayloadObjectEntry]
     tags: List[AlertTagEnum]
 
