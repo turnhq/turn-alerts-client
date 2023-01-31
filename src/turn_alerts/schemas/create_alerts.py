@@ -6,12 +6,9 @@ from uuid import UUID
 from marshmallow import Schema, fields
 from marshmallow.validate import OneOf
 
+from turn_alerts.schemas.tags import AlertTagEnum
+
 from .types import AlertTypeEnum, ObjectTypeEnum, UserTypeEnum
-
-
-class CreateAlertPayloadUserEntry(TypedDict):
-    user_type: UserTypeEnum
-    id: int
 
 
 class CreateAlertPayloadObjectEntry(TypedDict):
@@ -23,23 +20,28 @@ class CreateAlertPayload(TypedDict):
     title: str
     body: str
     type: AlertTypeEnum
-    user: CreateAlertPayloadUserEntry
+    partner_id: int
+    team_member_id: NotRequired[int]
     object: NotRequired[CreateAlertPayloadObjectEntry]
-    tags: NotRequired[List[str]]
+    tags: List[AlertTagEnum]
+
+
+class AlertObjectId(fields.Field):
+    def _deserialize(self, value):
+        if value is None:
+            raise ValueError("Alert Object may not be None")
+        return value
 
 
 class UserAlertSchema(Schema):
-    user_type = fields.String()
-    id = fields.Integer()
+    id = fields.UUID()
+    partner_id = fields.Integer()
+    team_member_id = fields.Integer(required=False)
 
 
 class ObjectAlertSchema(Schema):
-    object_type = fields.String(
-        validate=OneOf(
-            ["advise_job", "s3_upload", "export_request", "background_check", "bulk_upload", "single_invitation"]
-        )
-    )
-    id = fields.Integer()
+    type = fields.String(validate=OneOf([entry for entry in ObjectTypeEnum]))
+    id = AlertObjectId()
 
 
 class AlertSchema(Schema):
@@ -52,16 +54,29 @@ class AlertSchema(Schema):
 
 
 class AlertResponseSchema(Schema):
-    id = fields.String()
+    id = fields.UUID()
     title = fields.String()
     body = fields.String()
     type = fields.String()
-    user_id = fields.String()
-    recruitment_partner_id = fields.String(required=False, allow_none=True)
-    object_id = fields.String()
+    user = fields.Nested(UserAlertSchema)
+    object = fields.Nested(ObjectAlertSchema)
     active = fields.Boolean()
     created_at = fields.String()
-    tags = fields.List(fields.String, load_default=list)
+    tags = fields.List(
+        fields.Str(validate=OneOf([entry for entry in AlertTagEnum])),
+        load_default=list,
+    )
+
+
+class AlertObjectDict(TypedDict):
+    id: Union[str, int]
+    type: str
+
+
+class AlertUserDict(TypedDict):
+    id: UUID
+    partner_id: int
+    team_member_id: int
 
 
 class AlertResponseDict(TypedDict):
@@ -69,9 +84,8 @@ class AlertResponseDict(TypedDict):
     title: str
     body: str
     type: AlertTypeEnum
-    user_id: str
-    recruitment_partner_id: NotRequired[UUID]
-    object_id: NotRequired[Union[UUID, str]]
+    user: AlertUserDict
+    object: AlertObjectDict
     active: bool
     created_at: str
     tags: List[str]
