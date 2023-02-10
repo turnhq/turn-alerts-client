@@ -1,3 +1,4 @@
+import logging
 from typing import List, Type, Union, cast
 from .config import Config
 from .exceptions import AlertException
@@ -7,6 +8,8 @@ from .schemas.create_alerts import (
     AlertResponseSchema,
     CreateAlertPayload,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class AlertAPI:
@@ -38,6 +41,8 @@ class AlertAPI:
             data: Union[AlertResponseDict, List] = alert_response.dump(res.json())
             return cast(AlertResponseDict, data)
         else:
+            logger.info(res.status_code)
+            logger.info(res.json())
             raise AlertException()
 
     def list(self):
